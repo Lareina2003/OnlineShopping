@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Google Login (No Firebase SDK)</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+  <h1>Google Login (No Firebase SDK)</h1>
+ 
+  <!-- Google Sign-in Button -->
+  <div id="g_id_onload"
+       data-client_id="712295599937-4sib2buc3qj1munpqmbt9ucr8g7t1lus.apps.googleusercontent.com"
+       data-callback="handleCredentialResponse"
+       data-auto_prompt="false">
+  </div>
+ 
+  <div class="g_id_signin" data-type="standard"></div>
+ 
+  <!-- User Info -->
+  <div id="user-info">
+    <h3 id="user-name"></h3>
+    <img id="user-pic" width="80" height="80" />
+    <p id="user-email"></p>
+  </div>
+ 
+  <script src="script.js"></script>
+ 
+<script src="app.js"></script>
+
+</body>
+</html>
