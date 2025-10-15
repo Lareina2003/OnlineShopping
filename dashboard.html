@@ -1,21 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - Firestore Collections</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - Online Shopping (REST)</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* keep the small inline styles you had */
+    .category-btn { background-color:#ff6f61;color:white;padding:8px 15px;border-radius:8px;border:none;margin:5px;cursor:pointer;font-weight:bold;}
+    .category-btn:hover { background-color:#f4a300; }
+    .product-card button { background-color:#ff6f61;color:white;border:none;padding:6px 12px;border-radius:5px;cursor:pointer;margin-top:5px;}
+    .product-card button:hover { background-color:#f4a300; }
+  </style>
 </head>
 <body>
-  <h1>Online Shopping</h1>
-  <div id="user-info"></div>
+ 
+  <h1 style="position: relative;">
+    🛍️ Online Shopping Dashboard
+    <!-- My Cart Button -->
+<header><button id="my-cart-btn" style="display: none;" onclick="window.location.href='Cart.html'">🛒 My Cart</button></header>
 
-<input type="text" id="search" placeholder="Search products..." style="margin: 10px; padding: 5px; width: 300px;">
-<script src="dashboard.js"></script>
-<div id="collections" style="display: flex; flex-wrap: wrap;"></div>
- <div id="collections"></div>
+<script>
+  // Hide My Cart for admins
+  document.addEventListener("DOMContentLoaded", () => {
+    const role = (sessionStorage.getItem("User_role") || "user").toLowerCase();
+    const myCartBtn = document.getElementById("my-cart-btn");
 
+    if (role === "user") {
+      myCartBtn.style.display = "inline-block";
+    } else {
+      myCartBtn.style.display = "none";
+    }
+  });
 </script>
-  
+
+  </h1>
+
+  <div id="user-info"></div>
+  <div id="admin-panel"></div>
+
+  <div id="product-form-container" style="display:none; margin:20px; padding:15px; border:1px solid #ccc; border-radius:10px; width:300px; background:#fafafa;">
+    <h3>Add / Edit Product</h3>
+    <form id="product-form">
+      <label>Name:</label><br>
+      <input type="text" id="product-name" required><br><br>
+
+      <label>Price:</label><br>
+      <input type="number" id="product-price" required><br><br>
+
+      <label>Brand:</label><br>
+      <input type="text" id="product-brand"><br><br>
+
+      <label>Colour:</label><br>
+      <input type="text" id="product-colour"><br><br>
+
+      <label>Quantity:</label><br>
+      <input type="number" id="product-quantity"><br><br>
+
+      <label>Category:</label><br>
+      <select id="product-category" required>
+        <option value="">Select Category</option>
+      </select><br><br>
+
+      <label>Image URL:</label><br>
+      <input type="text" id="product-image"><br><br>
+
+      <button type="submit" id="submit-product-btn">Save Product</button>
+      <button type="button" id="cancel-product-btn">Cancel</button>
+    </form>
+  </div>
+
+  <input type="text" id="search" placeholder="Search products..." style="margin: 10px; padding: 5px; width: 300px;" />
+  <div id="collections" style="display: flex; flex-wrap: wrap; gap: 10px;"></div>
+
+  <script type="module" src="dashboard_rest.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const cartBtn = document.getElementById("my-cart-btn");
+      if (cartBtn) cartBtn.addEventListener("click", () => (window.location.href = "cart.html"));
+    });
+  </script>
 </body>
 </html>

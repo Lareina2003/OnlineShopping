@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Cart (REST)</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Your Cart</h1>
+  <div id="cart-user"></div>
+  <div id="cart-items"></div>
+  <div style="margin-top:20px;">
+    <button id="checkout-btn">Checkout</button>
+  </div>
+
+    <script type="module">
+    import './cart_rest.js';
+    window.addEventListener('DOMContentLoaded', () => {
+      if (typeof loadcarts === 'function') loadcarts();
+    });
+  </script>
+</body>
+</html>
+
