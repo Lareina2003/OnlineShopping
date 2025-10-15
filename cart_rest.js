@@ -174,14 +174,17 @@ document.getElementById("checkout-btn").addEventListener("click", async () => {
   const items = await listSubcollection(`carts/${uid}`, "items");
   if (!items.length) { alert("carts empty"); return; }
 
-  // Build commit that deletes each cart item.
-  const writes = items.map(i => ({ delete: `${FIRESTORE_BASE}/carts/${uid}/items/${i.id}` }));
-  // Note: not restoring product stock here — in your app you would reduce stock when adding to cart (we already reduced on add)
-  const resp = await fetch(FIRESTORE_COMMIT, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", ...getAuthHeader() },
-    body: JSON.stringify({ writes })
-  });
+ // ✅ Correct Firestore commit paths (NO full URL)
+const writes = items.map(i => ({
+  delete: `projects/${FIREBASE_PROJECT_ID}/databases/(default)/documents/carts/${uid}/items/${i.id}`
+}));
+
+const resp = await fetch(FIRESTORE_COMMIT, {
+  method: "POST",
+  headers: { "Content-Type": "application/json", ...getAuthHeader() },
+  body: JSON.stringify({ writes })
+});
+
   if (!resp.ok) {
     const txt = await resp.text();
     console.error("Checkout failed:", txt);
